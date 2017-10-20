@@ -1,4 +1,9 @@
 # WP-CLI Salt Command
+
+[![Packagist downloads](https://img.shields.io/packagist/dt/salaros/wp-cli-salts-command.svg)](https://packagist.org/packages/salaros/wp-cli-salts-command)
+[![Latest Stable Version](https://img.shields.io/packagist/v/salaros/wp-cli-salts-command.svg)](https://packagist.org/packages/salaros/wp-cli-salts-command)
+[![Package license](https://img.shields.io/packagist/l/salaros/wp-cli-salts-command.svg)](https://packagist.org/packages/salaros/wp-cli-salts-command)
+
 Manage salts for your WordPress installation
 
 ## Output salts to STDOUT
