@@ -1,5 +1,5 @@
 # WP-CLI Salt Command
-================
+Manage salts for your WordPress installation
 
 ## Output salts to STDOUT
 
