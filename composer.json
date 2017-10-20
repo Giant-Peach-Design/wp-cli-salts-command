@@ -2,7 +2,7 @@
   "name": "salaros/wp-cli-salts-command",
   "description": "Manage salts for your WordPress installation",
   "type": "wp-cli-package",
-  "homepage": "https://github.com/sebastiaandegeus/wp-cli-salts-command",
+  "homepage": "https://github.com/salaros/wp-cli-salts-command",
   "license": "MIT",
   "require": {
     "php": ">=5.4"
