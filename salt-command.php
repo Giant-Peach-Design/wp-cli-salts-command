@@ -16,10 +16,10 @@ class Salts_Command extends WP_CLI_Command {
    * : The name of the file to write to. Default outputs to STDOUT.
    *
    * [--format=<format>]
-   * : Can be php or env. Defaults to php.
+   * : Can be php, yaml or env. Defaults to php.
    *
    * @when before_wp_load
-   * @synopsis [--file=<file>] [--format=<format>]
+   * @synopsis [--file=<foo>, --format=<php,yaml,env>]
    *
    */
   function generate( $args, $assoc_args ) {
@@ -53,6 +53,18 @@ class Salts_Command extends WP_CLI_Command {
       case 'env':
         $pattern   = "/define\('([A-Z_]+)',\s*'(.+)'\);/";
         $formatted = "\n\n" . preg_replace($pattern, "$1='$2'", $data) . "\n";
+        break;
+
+      case 'yaml':
+        $data = str_replace("define('AUTH_KEY',", "auth_key:", $data);
+        $data = str_replace("define('SECURE_AUTH_KEY',","secure_auth_key:", $data);
+        $data = str_replace("define('LOGGED_IN_KEY',","logged_in_key:", $data);
+        $data = str_replace("define('NONCE_KEY',","nonce_key:", $data);
+        $data = str_replace("define('SECURE_AUTH_SALT',","secure_auth_salt:", $data);
+        $data = str_replace("define('LOGGED_IN_SALT',","logged_in_salt:", $data);
+        $data = str_replace("define('NONCE_SALT',","nonce_salt:", $data);
+        $formatted = str_replace("');","\"", $data);
+        $formatted = str_replace("'","\"", $formatted);
         break;
 
       case 'php':
