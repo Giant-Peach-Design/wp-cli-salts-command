@@ -6,7 +6,7 @@
   "license"     : "MIT",
   "require" : {
     "php"                   : ">=5.4",
-    "ircmaxell/random-lib"  : "^1.2.0"
+    "salaros/wp-salts"      : "~0.1.0"
   },
   "authors"    : [
     {
@@ -37,9 +37,6 @@
   "autoload" : {
     "files" : [
       "src/Salts_Command.php"
-    ],
-    "psr-4" : {
-      "Salaros\\WordPress\\" : "src/"
-    }
+    ]
   }
 }
