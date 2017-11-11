@@ -33,7 +33,8 @@ class Salts_Command extends WP_CLI_Command {
     $output = self::_format_data( $data, $assoc_args['format'] );
 
     if ( isset( $assoc_args['file'] ) ) {
-      $file = $assoc_args['file'];
+      
+      $file = (string)$assoc_args['file'];
 
       if ( ! is_writable( $file ) )
         WP_CLI::error( 'File is not writable or path is not correct: ' . $file );
