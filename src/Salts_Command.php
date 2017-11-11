@@ -1,7 +1,5 @@
 <?php
 
-use \WP_CLI;
-use \WP_CLI_Command;
 use Salaros\WordPress\Salts_Generator;
 
 /**
@@ -30,8 +28,8 @@ class Salts_Command extends WP_CLI_Command {
 		);
 		$assoc_args = array_merge( $defaults, $assoc_args );
 
-		$salts_data = self::generate_salts();
-		$output = self::format_data( $salts_data, $assoc_args['format'] );
+		$salts_data = Salts_Generator::generate_salts();
+		$output = Salts_Generator::format_data( $salts_data, $assoc_args['format'] );
 
 		if ( isset( $assoc_args['file'] ) ) {
 

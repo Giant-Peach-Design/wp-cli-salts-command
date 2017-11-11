@@ -35,8 +35,8 @@
     }
   ],
   "autoload" : {
-    "files"     : [
-      "src/class-salts-command.php"
+    "files" : [
+      "src/Salts_Command.php"
     ],
     "psr-4" : {
       "Salaros\\WordPress\\" : "src/"
