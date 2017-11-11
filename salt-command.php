@@ -13,6 +13,27 @@ class Salts_Command extends WP_CLI_Command {
   const ALL_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ []{}<>~`+=,.;:/?|!@#$%^&*()';
 
   /**
+   * Salts that need to be generated
+   *
+   * @var array
+   */
+  protected static $salts_info = [];
+
+  function __construct() {
+    self::$salts_info = [
+      'AUTH_KEY'          => 64,
+      'SECURE_AUTH_KEY'   => 64,
+      'LOGGED_IN_KEY'     => 64,
+      'NONCE_KEY'         => 64,
+      'AUTH_SALT'         => 64,
+      'SECURE_AUTH_SALT'  => 64,
+      'LOGGED_IN_SALT'    => 64,
+      'NONCE_SALT'        => 64,
+      'WP_CACHE_KEY_SALT' => 32,
+    ];
+  }
+
+  /**
    * Generates salts to STDOUT or to a file.
    *
    * ## OPTIONS
@@ -33,9 +54,8 @@ class Salts_Command extends WP_CLI_Command {
     );
     $assoc_args = array_merge( $defaults, $assoc_args );
 
-    $api    = 'https://api.wordpress.org/secret-key/1.1/salt/';
-    $data   = file_get_contents( $api );
-    $output = self::_format_data( $data, $assoc_args['format'] );
+    $salts_data = self::_generate_salts();
+    $output = self::_format_data( $salts_data, $assoc_args['format'] );
 
     if ( isset( $assoc_args['file'] ) ) {
       
@@ -56,41 +76,47 @@ class Salts_Command extends WP_CLI_Command {
   }
 
   private static function _format_data( $data, $format ) {
+    $template = false;
+    $line_end = PHP_EOL;
+    $call_func = 'strtoupper';
+
     switch ( $format ) {
       case 'env':
-        $pattern   = "/define\('([A-Z_]+)',\s*'(.+)'\);/";
-        $formatted = "\n\n" . preg_replace($pattern, "$1='$2'", $data);
-        $formatted .= sprintf( "WP_CACHE_KEY_SALT='%s'", self::_generate_salt(32) ) . "\n";
+        $template = "%s='%s'";
+        $line_end = "\n";
         break;
 
       case 'yaml':
-        $data = str_replace("define('AUTH_KEY',", "auth_key:", $data);
-        $data = str_replace("define('SECURE_AUTH_KEY',","secure_auth_key:", $data);
-        $data = str_replace("define('LOGGED_IN_KEY',","logged_in_key:", $data);
-        $data = str_replace("define('NONCE_KEY',","nonce_key:", $data);
-        $data = str_replace("define('SECURE_AUTH_SALT',","secure_auth_salt:", $data);
-        $data = str_replace("define('LOGGED_IN_SALT',","logged_in_salt:", $data);
-        $data = str_replace("define('NONCE_SALT',","nonce_salt:", $data);
-        $formatted = str_replace("');","\"", $data);
-        $formatted = str_replace("'","\"", $formatted);
-        $formatted .= sprintf( 'wp_cache_key_salt: "%s"', self::_generate_salt(32) ) . PHP_EOL;
+        $call_func = 'strtolower';
+        $template = '%s: "%s"';
         break;
 
       case 'php':
       default:
-        $formatted = '<?php' . PHP_EOL . PHP_EOL . $data;
-        $formatted .= sprintf( "define('WP_CACHE_KEY_SALT', '%s');", self::_generate_salt(32) ) . PHP_EOL;
+        $template = "define( '%s', '%s' );";
         break;
     }
+
+    $formatted = array_map(function ( $name, $salt ) use( $template, $call_func ) {
+      $name = call_user_func( $call_func, $name );
+      return sprintf( $template, $name, $salt );
+    }, array_keys( $data ), $data );
+    $formatted = implode( $line_end, $formatted );
+    $formatted = $line_end . $formatted . $line_end;
 
     return $formatted;
   }
 
-  private static function _generate_salt( $length = 64 ) {
+  private static function _generate_salts() {
     $factory = new Factory();
     $generator = $factory->getGenerator( new Strength(Strength::MEDIUM ) );
-    return $generator->generateString( $length, self::ALL_CHARACTERS );
+    $salts = [];
+    array_map( function ( $key, $length ) use ( &$salts, $generator ) {
+      $salts[ $key ] = $generator->generateString( $length, self::ALL_CHARACTERS );
+    }, array_keys( self::$salts_info ), self::$salts_info );
+    return $salts;
   }
+
 }
 
 WP_CLI::add_command( 'salts', 'Salts_Command' );
