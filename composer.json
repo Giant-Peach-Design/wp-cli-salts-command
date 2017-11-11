@@ -5,7 +5,8 @@
   "homepage"    : "https://github.com/salaros/wp-cli-salts-command",
   "license"     : "MIT",
   "require" : {
-    "php"       : ">=5.4"
+    "php"                   : ">=5.4",
+    "ircmaxell/random-lib"  : "^1.2.0"
   },
   "authors"    : [
     {
