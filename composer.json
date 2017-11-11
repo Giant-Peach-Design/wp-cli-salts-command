@@ -35,8 +35,8 @@
     }
   ],
   "autoload" : {
-    "files"     : [
-      "salt-command.php"
-    ]
+    "psr-4" : {
+      "Salaros\\WordPress\\Cli\\" : ""
+    }
   }
 }

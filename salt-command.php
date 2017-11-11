@@ -1,12 +1,12 @@
 <?php
 
+namespace Salaros\WordPress\Cli;
+
 use SecurityLib\Strength;
 use RandomLib\Factory;
 
 /**
- * Manage salts.
- *
- * @author Sebastiaan de Geus
+ * Manage salts via WP CLI.
  */
 class Salts_Command extends WP_CLI_Command {
 
