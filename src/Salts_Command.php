@@ -18,18 +18,23 @@ class Salts_Command extends WP_CLI_Command {
 	* [--format=<format>]
 	* : Can be php, yaml or env. Defaults to php.
 	*
+	* [--append=<SALT1,SALT2>]
+	* : A coma-separated list of additional salt variables to generate.
+	*
 	* @when before_wp_load
-	* @synopsis [--file=<foo>] [--format=<php,yaml,env>]
+	* @synopsis [--file=<foo>] [--format=<php,yaml,env>] [--append=<SALT1,SALT2>]
 	*
 	*/
 	function generate( $args, $assoc_args ) {
 		$defaults = array(
 			'format' => 'php',
+			'append' => [],
 		);
 		$assoc_args = array_merge( $defaults, $assoc_args );
 		$file_format = (string) $assoc_args['format'];
+		$append_salts = explode( ',', (string) $assoc_args['append'] );
 
-		$salts_output = Salts_Generator::generateFormattedSalts( $file_format );
+		$salts_output = Salts_Generator::generateFormattedSalts( $file_format, $append_salts );
 
 		if ( ! isset( $assoc_args['file'] ) ) {
 			fwrite( STDOUT, $salts_output );
