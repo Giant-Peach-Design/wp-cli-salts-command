@@ -11,27 +11,23 @@ use RandomLib\Factory;
 class Salts_Command extends WP_CLI_Command {
 
   const ALL_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ []{}<>~`+=,.;:/?|!@#$%^&*()';
-
+  
   /**
    * Salts that need to be generated
    *
    * @var array
    */
-  protected static $salts_info = [];
-
-  function __construct() {
-    self::$salts_info = [
-      'AUTH_KEY'          => 64,
-      'SECURE_AUTH_KEY'   => 64,
-      'LOGGED_IN_KEY'     => 64,
-      'NONCE_KEY'         => 64,
-      'AUTH_SALT'         => 64,
-      'SECURE_AUTH_SALT'  => 64,
-      'LOGGED_IN_SALT'    => 64,
-      'NONCE_SALT'        => 64,
-      'WP_CACHE_KEY_SALT' => 32,
-    ];
-  }
+  const SALT_SPECS = [
+    'AUTH_KEY'          => 64,
+    'SECURE_AUTH_KEY'   => 64,
+    'LOGGED_IN_KEY'     => 64,
+    'NONCE_KEY'         => 64,
+    'AUTH_SALT'         => 64,
+    'SECURE_AUTH_SALT'  => 64,
+    'LOGGED_IN_SALT'    => 64,
+    'NONCE_SALT'        => 64,
+    'WP_CACHE_KEY_SALT' => 32,
+  ];
 
   /**
    * Generates salts to STDOUT or to a file.
@@ -113,7 +109,7 @@ class Salts_Command extends WP_CLI_Command {
     $salts = [];
     array_map( function ( $key, $length ) use ( &$salts, $generator ) {
       $salts[ $key ] = $generator->generateString( $length, self::ALL_CHARACTERS );
-    }, array_keys( self::$salts_info ), self::$salts_info );
+    }, array_keys( self::SALT_SPECS ), self::SALT_SPECS );
     return $salts;
   }
 
