@@ -36,7 +36,7 @@ class Salts_Command extends WP_CLI_Command {
       
       $file = (string)$assoc_args['file'];
 
-      if ( ! is_writable( $file ) )
+      if ( file_exists( $file ) && ! is_writable( $file ) )
         WP_CLI::error( 'File is not writable or path is not correct: ' . $file );
 
       if ( ! file_put_contents( $file, $output ) )
