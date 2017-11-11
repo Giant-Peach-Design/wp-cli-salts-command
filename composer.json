@@ -7,6 +7,32 @@
   "require" : {
     "php"       : ">=5.4"
   },
+  "authors"    : [
+    {
+      "name"    : "Zhmayev Yaroslav",
+      "email"   : "salaros@salaros.com",
+      "homepage": "https://salaros.com",
+      "role"    : "Developer"
+    },
+    {
+      "name"    : "Sebastiaan de Geus",
+      "email"   : "sebastiaan@hoppinger.com",
+      "homepage": "https://www.hoppinger.com",
+      "role"    : "Creator"
+    },
+    {
+      "name"    : "Andrew Wilhelm",
+      "email"   : "andrewwilhelmex@gmail.com",
+      "homepage": "http://discreteunits.com/",
+      "role"    : "Developer"
+    },
+    {
+      "name"    : "Sam Stoller",
+      "email"   : "snstoller@gmail.com",
+      "homepage": "http://sdoubled.com",
+      "role"    : "Developer"
+    }
+  ],
   "autoload" : {
     "files"     : [
       "salt-command.php"
