@@ -19,7 +19,7 @@ class Salts_Command extends WP_CLI_Command {
    * : Can be php, yaml or env. Defaults to php.
    *
    * @when before_wp_load
-   * @synopsis [--file=<foo>, --format=<php,yaml,env>]
+   * @synopsis [--file=<foo>] [--format=<php,yaml,env>]
    *
    */
   function generate( $args, $assoc_args ) {
