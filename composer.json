@@ -36,6 +36,7 @@
   ],
   "autoload" : {
     "psr-4" : {
+      "": "src/WP_CLI",
       "Salaros\\WordPress\\Cli\\" : "src/"
     }
   }
