@@ -25,6 +25,16 @@ class Salts_Generator {
 		'WP_CACHE_KEY_SALT' => 32,
 	];
 
+	public static function write_to_file( $file_name, $content, $file_flags = 0 ) {
+		$file_flags = $file_flags ?: ( file_exists( $file_name ) ) ? FILE_APPEND : 0;
+
+		try {
+			return file_put_contents( $file_name, $content, $file_flags );
+		} catch ( \Exception $ex ) {
+			return false;
+		}
+	}
+
 	public static function format_data( $data, $format ) {
 		$template = false;
 		$line_end = PHP_EOL;

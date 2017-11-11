@@ -39,8 +39,7 @@ class Salts_Command extends WP_CLI_Command {
 				WP_CLI::error( 'File is not writable or path is not correct: ' . $file );
 			}
 
-			$file_flags = ( file_exists( $file ) ) ? FILE_APPEND : 0;
-			if ( ! file_put_contents( $file, $output, $file_flags ) ) {
+			if ( ! Salts_Generator::write_to_file( $file, $output ) ) {
 				WP_CLI::error( 'Could not write salts to: ' . $file );
 			}
 
