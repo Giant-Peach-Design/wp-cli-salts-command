@@ -7,6 +7,8 @@
  */
 class Salts_Command extends WP_CLI_Command {
 
+  const ALL_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ []{}<>~`+=,.;:/?|!@#$%^&*()';
+
   /**
    * Generates salts to STDOUT or to a file.
    *
@@ -54,7 +56,8 @@ class Salts_Command extends WP_CLI_Command {
     switch ( $format ) {
       case 'env':
         $pattern   = "/define\('([A-Z_]+)',\s*'(.+)'\);/";
-        $formatted = "\n\n" . preg_replace($pattern, "$1='$2'", $data) . "\n";
+        $formatted = "\n\n" . preg_replace($pattern, "$1='$2'", $data);
+        $formatted .= sprintf( "WP_CACHE_KEY_SALT='%s'", self::_generate_local_salt(32) ) . "\n";
         break;
 
       case 'yaml':
@@ -67,15 +70,25 @@ class Salts_Command extends WP_CLI_Command {
         $data = str_replace("define('NONCE_SALT',","nonce_salt:", $data);
         $formatted = str_replace("');","\"", $data);
         $formatted = str_replace("'","\"", $formatted);
+        $formatted .= sprintf( 'wp_cache_key_salt: "%s"', self::_generate_local_salt(32) ) . PHP_EOL;
         break;
 
       case 'php':
       default:
-        $formatted = '<?php' . PHP_EOL . PHP_EOL . $data . PHP_EOL;
+        $formatted = '<?php' . PHP_EOL . PHP_EOL . $data;
+        $formatted .= sprintf( "define('WP_CACHE_KEY_SALT', '%s');", self::_generate_local_salt(32) ) . PHP_EOL;
         break;
     }
 
     return $formatted;
+  }
+
+  private static function _generate_local_salt( $length = 64 ) {
+    $salt = '';
+    for ( $i = 0; $i < $length; $i++ ) {
+        $salt .= self::ALL_CHARACTERS[ rand( 0, strlen( self::ALL_CHARACTERS ) - 1 ) ];
+    }
+    return $salt;
   }
 }
 
