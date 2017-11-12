@@ -1,6 +1,6 @@
 <?php
 
-use Salaros\WordPress\Salts_Generator;
+use Salaros\WordPress\SaltsGenerator;
 
 /**
 * Manage salts via WP CLI.
@@ -27,16 +27,16 @@ class Salts_Command extends WP_CLI_Command {
 	*/
 	function generate( $args, $assoc_args ) {
 		$defaults = array(
-			'format' => 'php',
+			'format' => '',
 			'append' => '',
 		);
 		$assoc_args = array_merge( $defaults, $assoc_args );
 		$file_format = (string) $assoc_args['format'];
 		$append_salts = explode( ',', (string) $assoc_args['append'] );
 
-		$salts_output = Salts_Generator::generateSalts( $append_salts );
+		$salts_output = SaltsGenerator::generateSalts( $append_salts );
 		if ( ! isset( $assoc_args['file'] ) || empty( $assoc_args['file'] ) ) {
-			$salts_formatted = Salts_Generator::generateFormattedSalts( $file_format, $salts_output );
+			$salts_formatted = SaltsGenerator::generateFormattedSalts( $file_format, $salts_output );
 			fwrite( STDOUT, $salts_formatted );
 			return;
 		}
@@ -46,7 +46,7 @@ class Salts_Command extends WP_CLI_Command {
 			WP_CLI::error( 'File is not writable or path is not correct: ' . $out_file );
 		}
 
-		if ( ! Salts_Generator::writeToFile( $file_format, $out_file, $salts_output ) ) {
+		if ( ! SaltsGenerator::writeToFile( $file_format, $out_file, $salts_output ) ) {
 			WP_CLI::error( 'Could not write salts to: ' . $out_file );
 		}
 
