@@ -1,9 +1,7 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     // PHP Mess Detector settings
-	"phpmd.enabled": true,
-    "phpmd.validate.rulesetsFile": ".vscode/phpmd.xml",
-	"phpmd.validate.rulesets": "cleancode,codesize,controversial,design,naming,unusedcode",
+    "phpmd.rules": ".vscode/phpmd.xml",
 
     // PHP CodeSniffer settings
     "phpcs.enable": true,
