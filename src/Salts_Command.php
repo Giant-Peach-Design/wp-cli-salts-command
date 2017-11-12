@@ -34,9 +34,8 @@ class Salts_Command extends WP_CLI_Command {
 		$file_format = (string) $assoc_args['format'];
 		$append_salts = explode( ',', (string) $assoc_args['append'] );
 
-		$salts_output = SaltsGenerator::generateSalts( $append_salts );
 		if ( ! isset( $assoc_args['file'] ) || empty( $assoc_args['file'] ) ) {
-			$salts_formatted = SaltsGenerator::generateFormattedSalts( $file_format, $salts_output );
+			$salts_formatted = SaltsGenerator::generateFormattedSalts( $file_format, $append_salts );
 			fwrite( STDOUT, $salts_formatted );
 			return;
 		}
@@ -46,7 +45,7 @@ class Salts_Command extends WP_CLI_Command {
 			WP_CLI::error( 'File is not writable or path is not correct: ' . $out_file );
 		}
 
-		if ( ! SaltsGenerator::writeToFile( $file_format, $out_file, $salts_output ) ) {
+		if ( ! SaltsGenerator::writeToFile( $file_format, $out_file, $append_salts ) ) {
 			WP_CLI::error( 'Could not write salts to: ' . $out_file );
 		}
 
