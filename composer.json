@@ -1,41 +1,53 @@
 {
-  "name"        : "salaros/wp-cli-salts-command",
-  "description" : "Manage salts for your WordPress installation",
-  "type"        : "wp-cli-package",
-  "homepage"    : "https://github.com/salaros/wp-cli-salts-command",
-  "license"     : "MIT",
-  "require" : {
-    "php"                   : ">=5.4",
-    "salaros/wp-salts"      : "~0.3.1"
-  },
-  "authors"    : [
+  "name": "giantpeach/wp-cli-salts-command",
+  "description": "Manage salts for your WordPress installation",
+  "type": "wp-cli-package",
+  "homepage": "https://github.com/Giant-Peach-Design/wp-cli-salts-command",
+  "license": "MIT",
+  "repositories": [
     {
-      "name"    : "Zhmayev Yaroslav",
-      "email"   : "salaros@salaros.com",
-      "homepage": "https://salaros.com",
-      "role"    : "Developer"
-    },
-    {
-      "name"    : "Sebastiaan de Geus",
-      "email"   : "sebastiaan@hoppinger.com",
-      "homepage": "https://www.hoppinger.com",
-      "role"    : "Creator"
-    },
-    {
-      "name"    : "Andrew Wilhelm",
-      "email"   : "andrewwilhelmex@gmail.com",
-      "homepage": "http://discreteunits.com/",
-      "role"    : "Developer"
-    },
-    {
-      "name"    : "Sam Stoller",
-      "email"   : "snstoller@gmail.com",
-      "homepage": "http://sdoubled.com",
-      "role"    : "Developer"
+      "type": "vcs",
+      "url": "https://github.com/Giant-Peach-Design/wp-salts"
     }
   ],
-  "autoload" : {
-    "files" : [
+  "require": {
+    "php": ">=7.4",
+    "giantpeach/wp-salts": "@dev"
+  },
+  "authors": [
+    {
+      "name": "Zhmayev Yaroslav",
+      "email": "salaros@salaros.com",
+      "homepage": "https://salaros.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Sebastiaan de Geus",
+      "email": "sebastiaan@hoppinger.com",
+      "homepage": "https://www.hoppinger.com",
+      "role": "Creator"
+    },
+    {
+      "name": "Andrew Wilhelm",
+      "email": "andrewwilhelmex@gmail.com",
+      "homepage": "http://discreteunits.com/",
+      "role": "Developer"
+    },
+    {
+      "name": "Sam Stoller",
+      "email": "snstoller@gmail.com",
+      "homepage": "http://sdoubled.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Giant Peach",
+      "email": "dev@giantpeach.agency",
+      "homepage": "https://giantpeach.agency",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "files": [
       "src/Salts_Command.php"
     ]
   }
